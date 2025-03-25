@@ -1,6 +1,9 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+const customCursor = document.getElementById('customCursor');
+
+
 // Carga la imagen de contexto con las instrucciones
 const contextImage = new Image();
 contextImage.src = 'assets/context.svg';
@@ -70,6 +73,9 @@ const puerta1Sprite = new Image();
 puerta1Sprite.src = 'assets/puerta1.png';
 const puerta2Sprite = new Image();
 puerta2Sprite.src = 'assets/puerta2.png';
+
+// Variable para saber si estamos arrastrando una bomba
+let draggingBomb = false;
 
 // Estados del juego: "start", "playing" y "gameOver"
 let gameState = "start";
@@ -623,7 +629,6 @@ function drawGame() {
   bombs.forEach(bomb => bomb.draw(ctx));
   drawHUD();
 }
-
 // -------------------------------------------------
 // Ciclo de juego
 // -------------------------------------------------
@@ -653,29 +658,33 @@ requestAnimationFrame(gameLoop);
 // Manejo de eventos: arrastrar/soltar y botones
 // -------------------------------------------------
 let selectedBomb = null;
+
 canvas.addEventListener('mousedown', (e) => {
   const rect = canvas.getBoundingClientRect();
   const mouseX = e.clientX - rect.left;
   const mouseY = e.clientY - rect.top;
-  
+
   if (gameState === "playing") {
     bombs.forEach(bomb => {
       if (!bomb.exploded && !bomb.insideSafeZone) {
         const dx = mouseX - bomb.x;
         const dy = mouseY - bomb.y;
-        if (Math.sqrt(dx * dx + dy * dy) < bomb.radius) {
+        if (Math.hypot(dx, dy) < bomb.radius) {
           bomb.beingDragged = true;
           selectedBomb = bomb;
+          canvas.style.cursor = dragCursor;
         }
       }
     });
-  } else if (gameState === "start") {
+  }
+  else if (gameState === "start") {
     if (mouseX >= button.x && mouseX <= button.x + button.width &&
         mouseY >= button.y && mouseY <= button.y + button.height) {
       resetGame();
       gameState = "playing";
     }
-  } else if (gameState === "gameOver") {
+  }
+  else if (gameState === "gameOver") {
     if (mouseX >= button.x && mouseX <= button.x + button.width &&
         mouseY >= button.y && mouseY <= button.y + button.height) {
       resetGame();
@@ -683,13 +692,28 @@ canvas.addEventListener('mousedown', (e) => {
     }
   }
 });
+
 canvas.addEventListener('mousemove', (e) => {
-  if (gameState === "playing" && selectedBomb) {
-    const rect = canvas.getBoundingClientRect();
-    selectedBomb.x = e.clientX - rect.left;
-    selectedBomb.y = e.clientY - rect.top;
+  const rect = canvas.getBoundingClientRect();
+  mouseX = e.clientX - rect.left;
+  mouseY = e.clientY - rect.top;
+
+  // Siempre mostramos el cursor personalizado
+  customCursor.style.display = 'block';
+  customCursor.style.left = `${e.clientX}px`;
+  customCursor.style.top = `${e.clientY}px`;
+
+  // Cambia sprite si estás arrastrando una bomba
+  customCursor.src = selectedBomb ? 'assets/cursor2.png' : 'assets/cursor1.png';
+
+  // Actualiza posición de la bomba mientras se arrastra
+  if (selectedBomb) {
+    selectedBomb.x = mouseX;
+    selectedBomb.y = mouseY;
   }
 });
+
+
 canvas.addEventListener('mouseup', () => {
   if (gameState === "playing" && selectedBomb) {
     selectedBomb.beingDragged = false;
@@ -704,5 +728,7 @@ canvas.addEventListener('mouseup', () => {
       }
     });
     selectedBomb = null;
+    canvas.style.cursor = defaultCursor;
   }
 });
+

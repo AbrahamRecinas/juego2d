@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juego Bombas de Colores</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/bomb1.png">
   <style>
     body {
       margin: 0;
@@ -16,11 +18,15 @@
     canvas {
       background-color: #fff;
       border: 2px solid #000;
+      cursor: none;
     }
   </style>
 </head>
 <body>
   <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <img id="customCursor" src="assets/cursor1.png"
+     style="position:absolute; pointer-events:none; width:40px; height:40px;
+            transform:translate(-50%, -50%); display:none;">
   <script src="game.js"></script>
 </body>
 </html>
