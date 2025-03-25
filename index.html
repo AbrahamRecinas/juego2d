@@ -2,31 +2,71 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Juego Bombas de Colores</title>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/bomb1.png">
+  <link rel="icon" href="assets/bomb1.png" type="image/png">
+
+  <!-- Bootstrap CSS -->
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet">
+  
   <style>
     body {
       margin: 0;
       height: 100vh;
       display: flex;
+      flex-direction: column;
+      background: #222;
+    }
+    main {
+      flex: 1;
+      display: flex;
       justify-content: center;
       align-items: center;
-      background: #222;
     }
     canvas {
       background-color: #fff;
       border: 2px solid #000;
       cursor: none;
     }
+    #customCursor {
+      position: absolute;
+      pointer-events: none;
+      width: 40px;
+      height: 40px;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="800" height="600"></canvas>
-  <img id="customCursor" src="assets/cursor1.png"
-     style="position:absolute; pointer-events:none; width:40px; height:40px;
-            transform:translate(-50%, -50%); display:none;">
+
+  <!-- Header -->
+  <header class="bg-secondary text-center py-5">
+    <div class="container d-flex justify-content-center align-items-center">
+      <img src="assets/bomb1.png" alt="Bomb1" class="me-3" style="width:60px;">
+      <h1 class="display-1 text-light mb-0">Juego Bombas de Colores</h1>
+      <img src="assets/bomb2.png" alt="Bomb2" class="ms-3" style="width:60px;">
+    </div>
+  </header>
+
+  <!-- Main Canvas Area -->
+  <main class="container">
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <img id="customCursor" src="assets/cursor1.png">
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light text-center py-3">
+    <p class="mb-1">Falcon Recinas Abraham — 22200727</p>
+    <p class="mb-1">Benitez Rivera Alexa   - 23200335</p>
+    <small>Todos los derechos reservados © 2024</small>
+  </footer>
+
   <script src="game.js"></script>
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+  </script>
 </body>
 </html>
