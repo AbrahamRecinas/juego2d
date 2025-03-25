@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 
 const customCursor = document.getElementById('customCursor');
 
-let music = new Audio('/assets/background.mp3'); // Musica del juego
+let music = new Audio('assets/background.mp3'); // Musica del juego
 
 function reproducirMusic() {
   music.volume = 0.4; // Ajusta el volumen antes de reproducirlo
