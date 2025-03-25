@@ -1,6 +1,7 @@
 // Selección del canvas y contexto
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+ctx.font = '16px "Press Start 2P"';
 // Crea y carga la imagen de fondo (asegúrate de que la ruta sea correcta)
 const backgroundImage = new Image();
 backgroundImage.src = 'assets/floor.svg';
