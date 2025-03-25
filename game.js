@@ -11,8 +11,6 @@ function reproducirMusic() {
   music.play();
 }
 
-window.addEventListener('load', reproducirMusic);
-
 // Carga la imagen de contexto con las instrucciones
 const contextImage = new Image();
 contextImage.src = 'assets/context.svg';
@@ -674,6 +672,7 @@ canvas.addEventListener('mousedown', (e) => {
   const mouseY = e.clientY - rect.top;
 
   if (gameState === "playing") {
+    reproducirMusic();
     bombs.forEach(bomb => {
       if (!bomb.exploded && !bomb.insideSafeZone) {
         const dx = mouseX - bomb.x;
