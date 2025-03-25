@@ -639,6 +639,17 @@ function drawGame() {
 // -------------------------------------------------
 // Ciclo de juego
 // -------------------------------------------------
+let accumulator=0;
+function gameLoop(ts){
+  const dt=(ts-last)/1000;
+  last=ts;
+  accumulator+=dt;
+  if(accumulator>=1/30){
+    update(1/30); draw();
+    accumulator=0;
+  }
+  requestAnimationFrame(gameLoop);
+}
 let lastTime = 0;
 function gameLoop(timeStamp) {
   const deltaTime = (timeStamp - lastTime) / 1000;
