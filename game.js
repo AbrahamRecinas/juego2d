@@ -1,7 +1,13 @@
-// Selección del canvas y contexto
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-ctx.font = '16px "Press Start 2P"';
+
+// Carga la imagen de contexto con las instrucciones
+const contextImage = new Image();
+contextImage.src = 'assets/context.svg';
+
+const gameoverImage = new Image();
+gameoverImage.src = 'assets/gameover.svg';
+
 // Crea y carga la imagen de fondo (asegúrate de que la ruta sea correcta)
 const backgroundImage = new Image();
 backgroundImage.src = 'assets/floor.svg';
@@ -133,49 +139,41 @@ function drawHUD() {
   ctx.fillText("Bombas No Seguras: " + getUnsafeBombCount(), 20, 85);
 }
 
-
 // Pantalla de inicio
 function drawStartScreen() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.textAlign = "center";
-  ctx.fillStyle = "black";
-  ctx.font = "30px Arial";
-  ctx.fillText("Bienvenido al Juego de Bombas", canvas.width / 2, canvas.height / 2 - 60);
-  ctx.font = "20px Arial";
-  ctx.fillText("Arrastra cada bomba a su zona de color", canvas.width / 2, canvas.height / 2 - 20);
-  ctx.fillText("Si no lo haces, explotarán y perderás vidas", canvas.width / 2, canvas.height / 2 + 10);
   
-  // Botón "Jugar"
+  // Dibuja la imagen de contexto abarcando todo el canvas
+  ctx.drawImage(contextImage, 0, 0, canvas.width, canvas.height);
+  
+  // Dibuja el botón "Jugar" sobre la imagen, centrado en la parte inferior
   ctx.fillStyle = "lightblue";
   ctx.fillRect(button.x, button.y, button.width, button.height);
   ctx.strokeStyle = "black";
   ctx.strokeRect(button.x, button.y, button.width, button.height);
+  
   ctx.font = "24px Arial";
   ctx.fillStyle = "black";
+  ctx.textAlign = "center";
   ctx.fillText("Jugar", canvas.width / 2, button.y + button.height / 2 + 8);
 }
 
-// Pantalla de Game Over
+
 function drawGameOverScreen() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.textAlign = "center";
-  ctx.font = "50px Arial";
-  ctx.fillStyle = "red";
-  ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 60);
   
-  // Mostrar contadores finales
-  ctx.font = "20px Arial";
-  ctx.fillStyle = "black";
-  ctx.fillText("Bombas Seguras: " + safeBombs, canvas.width / 2, canvas.height / 2);
-  ctx.fillText("Bombas No Seguras: " + getUnsafeBombCount(), canvas.width / 2, canvas.height / 2 + 30);
+  // Dibuja la imagen de Game Over abarcando todo el canvas
+  ctx.drawImage(gameoverImage, 0, 0, canvas.width, canvas.height);
   
-  // Botón "Reiniciar"
+  // Dibuja el botón "Reiniciar" sobre la imagen
   ctx.fillStyle = "lightgreen";
   ctx.fillRect(button.x, button.y, button.width, button.height);
   ctx.strokeStyle = "black";
   ctx.strokeRect(button.x, button.y, button.width, button.height);
+  
   ctx.font = "24px Arial";
   ctx.fillStyle = "black";
+  ctx.textAlign = "center";
   ctx.fillText("Reiniciar", canvas.width / 2, button.y + button.height / 2 + 8);
 }
 
@@ -347,7 +345,7 @@ class Bomb {
     this.y = y;
     this.radius = 20; // Se dibuja en 40x40 píxeles.
     this.color = color;
-    this.timer = 3; // La bomba explota a los 3 segundos si no está segura.
+    this.timer = 10; // La bomba explota a los 3 segundos si no está segura.
     this.exploded = false;
     this.beingDragged = false;
     this.insideSafeZone = false;
